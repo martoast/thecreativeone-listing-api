@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    networks:
+      - my_network
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - my-datavolume:/var/lib/mysql
+  api:
+    build: .
+    networks:
+      - my_network
+    env_file:
+      - .env
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+    depends_on:
+      - db
+    entrypoint: ["/app/wait-for-it.sh", "db:3306", "--", "./main"]
+networks:
+  my_network:
+volumes:
+  my-datavolume:
