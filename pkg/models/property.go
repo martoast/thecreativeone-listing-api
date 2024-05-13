@@ -11,7 +11,7 @@ var db *gorm.DB
 type Property struct {
 	gorm.Model
 	Address         string   `json:"address"`
-	Price           *float64 `json:"price,omitempty"`             // DECIMAL(10, 2)
+	Price           *float64 `json:"price"`                       // DECIMAL(10, 2)
 	DownPayment     *float64 `json:"down_payment,omitempty"`      // DECIMAL(10, 2)
 	TotalPrice      *float64 `json:"total_price,omitempty"`       // DECIMAL(10, 2)
 	Interest        *float64 `json:"interest,omitempty"`          // DECIMAL(5, 2)
@@ -21,8 +21,8 @@ type Property struct {
 	Benefits        *string  `json:"benefits,omitempty"`          // TEXT
 	Images          *string  `json:"images,omitempty"`            // JSON array of image URLs or a string of delimited URLs
 	Sold            *bool    `json:"sold,omitempty"`              // BOOLEAN
-	Bedrooms        *int     `json:"bedrooms,omitempty"`          // INT
-	Bathrooms       *float64 `json:"bathrooms,omitempty"`         // DECIMAL(3, 1)
+	Bedrooms        *int     `json:"bedrooms"`                    // INT
+	Bathrooms       *float64 `json:"bathrooms"`                   // DECIMAL(3, 1)
 	SquareFootage   *int     `json:"square_footage,omitempty"`    // INT
 	RentZestimate   *float64 `json:"rent_zestimate,omitempty"`    // DECIMAL(10, 2)
 	PropertyType    *string  `json:"property_type,omitempty"`     // VARCHAR(255)
