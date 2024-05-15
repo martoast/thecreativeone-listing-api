@@ -43,9 +43,9 @@ func GetPropertyById(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateProperty(w http.ResponseWriter, r *http.Request) {
-	BookModel := &models.Property{}
-	utils.ParseBody(r, CreateProperty)
-	b := BookModel.CreateProperty()
+	PropertyModel := &models.Property{}
+	utils.ParseBody(r, PropertyModel)
+	b := PropertyModel.CreateProperty()
 	res, err := json.Marshal(b)
 	if err != nil {
 		panic(err)
@@ -56,13 +56,19 @@ func CreateProperty(w http.ResponseWriter, r *http.Request) {
 
 func DeleteProperty(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	propertyId := vars["propertyId"]
-	ID, err := strconv.ParseInt(propertyId, 0, 0)
+	PropertyId := vars["PropertyId"]
+	ID, err := strconv.ParseInt(PropertyId, 10, 64)
 	if err != nil {
 		fmt.Println("error while parsing")
+		http.Error(w, "Invalid property ID", http.StatusBadRequest)
+		return
 	}
-	book := models.DeleteProperty(ID)
-	res, _ := json.Marshal(book)
+	property := models.DeleteProperty(ID)
+	res, err := json.Marshal(property)
+	if err != nil {
+		http.Error(w, "Failed to encode response as JSON", http.StatusInternalServerError)
+		return
+	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
@@ -72,15 +78,41 @@ func UpdateProperty(w http.ResponseWriter, r *http.Request) {
 	var updateProperty = &models.Property{}
 	utils.ParseBody(r, updateProperty)
 	vars := mux.Vars(r)
-	propertyId := vars["propertyId"]
-	ID, err := strconv.ParseInt(propertyId, 0, 0)
+	PropertyId := vars["PropertyId"]
+	ID, err := strconv.ParseInt(PropertyId, 10, 64)
 	if err != nil {
 		fmt.Println("error while parsing")
 	}
 	propertyDetails, db := models.GetPropertyById(ID)
-	if updateProperty.Address != "" {
-		propertyDetails.Address = updateProperty.Address
-	}
+
+	propertyDetails.Price = updateProperty.Price
+	propertyDetails.DownPayment = updateProperty.DownPayment
+	propertyDetails.TotalPrice = updateProperty.TotalPrice
+	propertyDetails.Interest = updateProperty.Interest
+	propertyDetails.MonthlyPayment = updateProperty.MonthlyPayment
+	propertyDetails.Description = updateProperty.Description
+	propertyDetails.ARV = updateProperty.ARV
+	propertyDetails.Benefits = updateProperty.Benefits
+	propertyDetails.Images = updateProperty.Images
+	propertyDetails.Sold = updateProperty.Sold
+	propertyDetails.Bedrooms = updateProperty.Bedrooms
+	propertyDetails.Bathrooms = updateProperty.Bathrooms
+	propertyDetails.SquareFootage = updateProperty.SquareFootage
+	propertyDetails.RentZestimate = updateProperty.RentZestimate
+	propertyDetails.Zestimate = updateProperty.Zestimate
+	propertyDetails.PropertyType = updateProperty.PropertyType
+	propertyDetails.Zoning = updateProperty.Zoning
+	propertyDetails.YearBuilt = updateProperty.YearBuilt
+	propertyDetails.LotSize = updateProperty.LotSize
+	propertyDetails.PricePerSquareFoot = updateProperty.PricePerSquareFoot
+	propertyDetails.MortgageBalance = updateProperty.MortgageBalance
+	propertyDetails.InterestRate = updateProperty.InterestRate
+	propertyDetails.PITI = updateProperty.PITI
+	propertyDetails.ExitROIStrategy = updateProperty.ExitROIStrategy
+	propertyDetails.EstimateROI = updateProperty.EstimateROI
+	propertyDetails.MonthlyCashFlow = updateProperty.MonthlyCashFlow
+	propertyDetails.EquityBuildup = updateProperty.EquityBuildup
+	propertyDetails.LivingArea = updateProperty.LivingArea
 
 	db.Save(&propertyDetails)
 	res, err := json.Marshal(propertyDetails)

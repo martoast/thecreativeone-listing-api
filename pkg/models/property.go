@@ -11,32 +11,34 @@ var db *gorm.DB
 type Property struct {
 	gorm.Model
 	Address            string   `json:"address"`
-	Price              *float64 `json:"price"`                           // DECIMAL(10, 2)
-	DownPayment        *float64 `json:"down_payment,omitempty"`          // DECIMAL(10, 2)
-	TotalPrice         *float64 `json:"total_price,omitempty"`           // DECIMAL(10, 2)
-	Interest           *float64 `json:"interest,omitempty"`              // DECIMAL(5, 2)
-	MonthlyPayment     *float64 `json:"monthly_payment,omitempty"`       // DECIMAL(10, 2)
-	Description        *string  `json:"description,omitempty"`           // TEXT
-	ARV                *float64 `json:"arv,omitempty"`                   // DECIMAL(10, 2) After Repair Value
-	Benefits           *string  `json:"benefits,omitempty"`              // TEXT
-	Images             *string  `json:"images,omitempty"`                // JSON array of image URLs or a string of delimited URLs
-	Sold               *bool    `json:"sold,omitempty"`                  // BOOLEAN
-	Bedrooms           *int     `json:"bedrooms"`                        // INT
-	Bathrooms          *float64 `json:"bathrooms"`                       // DECIMAL(3, 1)
-	SquareFootage      *int     `json:"square_footage,omitempty"`        // INT
-	RentZestimate      *float64 `json:"rent_zestimate,omitempty"`        // DECIMAL(10, 2)
-	Zestimate          *float64 `json:"zestimate,omitempty"`             // DECIMAL(10, 2)
-	PropertyType       *string  `json:"property_type,omitempty"`         // VARCHAR(255)
-	YearBuilt          *int     `json:"year_built,omitempty"`            // INT
-	LotSize            *int     `json:"lot_size,omitempty"`              // INT
-	PricePerSquareFoot *float64 `json:"price_per_square_foot,omitempty"` // DECIMAL(10,2)
-	MortgageBalance    *float64 `json:"mortgage_balance,omitempty"`      // DECIMAL(10, 2)
-	InterestRate       *float64 `json:"interest_rate,omitempty"`         // DECIMAL(5, 2)
-	PITI               *float64 `json:"piti,omitempty"`                  // Principal, Interest, Taxes, Insurance (DECIMAL(10, 2))
-	ExitROIStrategy    *string  `json:"exit_roi_strategy,omitempty"`     // VARCHAR(255)
-	EstimateROI        *float64 `json:"estimate_roi,omitempty"`          // ROI/Cash on Cash (DECIMAL(5, 2))
-	MonthlyCashFlow    *float64 `json:"monthly_cash_flow,omitempty"`     // DECIMAL(10, 2)
-	EquityBuildup      *float64 `json:"equity_buildup,omitempty"`        // DECIMAL(10, 2)
+	Price              *float64 `json:"price"`                 // DECIMAL(10, 2)
+	DownPayment        *float64 `json:"down_payment"`          // DECIMAL(10, 2)
+	TotalPrice         *float64 `json:"total_price"`           // DECIMAL(10, 2)
+	Interest           *float64 `json:"interest"`              // DECIMAL(5, 2)
+	MonthlyPayment     *float64 `json:"monthly_payment"`       // DECIMAL(10, 2)
+	Description        *string  `json:"description"`           // TEXT
+	ARV                *float64 `json:"arv"`                   // DECIMAL(10, 2) After Repair Value
+	Benefits           *string  `json:"benefits"`              // TEXT
+	Images             *string  `json:"images"`                // JSON array of image URLs or a string of delimited URLs
+	Sold               *bool    `json:"sold"`                  // BOOLEAN
+	Bedrooms           *int     `json:"bedrooms"`              // INT
+	Bathrooms          *float64 `json:"bathrooms"`             // DECIMAL(3, 1)
+	SquareFootage      *int     `json:"square_footage"`        // INT
+	RentZestimate      *float64 `json:"rent_zestimate"`        // DECIMAL(10, 2)
+	Zestimate          *float64 `json:"zestimate"`             // DECIMAL(10, 2)
+	PropertyType       *string  `json:"property_type"`         // VARCHAR(255)
+	Zoning             *string  `json:"zoning"`                // VARCHAR(255)
+	YearBuilt          *int     `json:"year_built"`            // INT
+	LotSize            *int     `json:"lot_size"`              // INT
+	PricePerSquareFoot *float64 `json:"price_per_square_foot"` // DECIMAL(10, 2)
+	MortgageBalance    *float64 `json:"mortgage_balance"`      // DECIMAL(10, 2)
+	InterestRate       *float64 `json:"interest_rate"`         // DECIMAL(5, 2)
+	PITI               *float64 `json:"piti"`                  // Principal, Interest, Taxes, Insurance (DECIMAL(10, 2))
+	ExitROIStrategy    *string  `json:"exit_roi_strategy"`     // VARCHAR(255)
+	EstimateROI        *float64 `json:"estimate_roi"`          // ROI/Cash on Cash (DECIMAL(5, 2))
+	MonthlyCashFlow    *float64 `json:"monthly_cash_flow"`     // DECIMAL(10, 2)
+	EquityBuildup      *float64 `json:"equity_buildup"`        // DECIMAL(10, 2)
+	LivingArea         *int     `json:"living_area"`           // INT
 }
 
 func init() {
@@ -44,6 +46,8 @@ func init() {
 	db = config.GetDB()
 
 	db.AutoMigrate(&Property{})
+
+	// DeleteProperty(8)
 
 	// Seed data if needed
 	var count int64
@@ -98,6 +102,7 @@ func SeedProperties() {
 			RentZestimate:      newFloat64(2500),
 			Zestimate:          newFloat64(300000),
 			PropertyType:       newString("Single Family"),
+			Zoning:             newString("R-1:SINGLE FAM-RES"),
 			YearBuilt:          newInt(1990),
 			LotSize:            newInt(5000),
 			PricePerSquareFoot: newFloat64(300),
