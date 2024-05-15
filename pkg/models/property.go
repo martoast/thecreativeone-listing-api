@@ -12,18 +12,11 @@ type Property struct {
 	gorm.Model
 	Address            string   `json:"address"`
 	Price              *float64 `json:"price"`                 // DECIMAL(10, 2)
-	DownPayment        *float64 `json:"down_payment"`          // DECIMAL(10, 2)
-	TotalPrice         *float64 `json:"total_price"`           // DECIMAL(10, 2)
-	Interest           *float64 `json:"interest"`              // DECIMAL(5, 2)
-	MonthlyPayment     *float64 `json:"monthly_payment"`       // DECIMAL(10, 2)
 	Description        *string  `json:"description"`           // TEXT
-	ARV                *float64 `json:"arv"`                   // DECIMAL(10, 2) After Repair Value
-	Benefits           *string  `json:"benefits"`              // TEXT
 	Images             *string  `json:"images"`                // JSON array of image URLs or a string of delimited URLs
 	Sold               *bool    `json:"sold"`                  // BOOLEAN
 	Bedrooms           *int     `json:"bedrooms"`              // INT
 	Bathrooms          *float64 `json:"bathrooms"`             // DECIMAL(3, 1)
-	SquareFootage      *int     `json:"square_footage"`        // INT
 	RentZestimate      *float64 `json:"rent_zestimate"`        // DECIMAL(10, 2)
 	Zestimate          *float64 `json:"zestimate"`             // DECIMAL(10, 2)
 	PropertyType       *string  `json:"property_type"`         // VARCHAR(255)
@@ -31,13 +24,6 @@ type Property struct {
 	YearBuilt          *int     `json:"year_built"`            // INT
 	LotSize            *int     `json:"lot_size"`              // INT
 	PricePerSquareFoot *float64 `json:"price_per_square_foot"` // DECIMAL(10, 2)
-	MortgageBalance    *float64 `json:"mortgage_balance"`      // DECIMAL(10, 2)
-	InterestRate       *float64 `json:"interest_rate"`         // DECIMAL(5, 2)
-	PITI               *float64 `json:"piti"`                  // Principal, Interest, Taxes, Insurance (DECIMAL(10, 2))
-	ExitROIStrategy    *string  `json:"exit_roi_strategy"`     // VARCHAR(255)
-	EstimateROI        *float64 `json:"estimate_roi"`          // ROI/Cash on Cash (DECIMAL(5, 2))
-	MonthlyCashFlow    *float64 `json:"monthly_cash_flow"`     // DECIMAL(10, 2)
-	EquityBuildup      *float64 `json:"equity_buildup"`        // DECIMAL(10, 2)
 	LivingArea         *int     `json:"living_area"`           // INT
 }
 
@@ -87,32 +73,19 @@ func SeedProperties() {
 		{
 			Address:            "4949 Corrado Ave, Ave Maria, FL 34142",
 			Price:              newFloat64(300000),
-			DownPayment:        newFloat64(60000),
-			TotalPrice:         newFloat64(320000),
-			Interest:           newFloat64(5.0),
-			MonthlyPayment:     newFloat64(1500),
 			Description:        newString("Beautiful family home in a quiet neighborhood."),
-			ARV:                newFloat64(350000),
-			Benefits:           newString("Close to schools and shopping centers, high appreciation potential."),
 			Images:             newString("[\"https://static.tildacdn.com/stor3630-6334-4663-b532-393032356238/65960768.jpg\", \"https://static.tildacdn.com/stor3663-3339-4534-b332-393563363363/61347039.jpg\"]"),
 			Sold:               newBool(false),
 			Bedrooms:           newInt(3),
 			Bathrooms:          newFloat64(2.5),
-			SquareFootage:      newInt(1500),
 			RentZestimate:      newFloat64(2500),
 			Zestimate:          newFloat64(300000),
 			PropertyType:       newString("Single Family"),
 			Zoning:             newString("R-1:SINGLE FAM-RES"),
 			YearBuilt:          newInt(1990),
 			LotSize:            newInt(5000),
+			LivingArea:         newInt(3000),
 			PricePerSquareFoot: newFloat64(300),
-			MortgageBalance:    newFloat64(200000),
-			InterestRate:       newFloat64(3.5),
-			PITI:               newFloat64(2000),
-			ExitROIStrategy:    newString("Sell after two years"),
-			EstimateROI:        newFloat64(10.5),
-			MonthlyCashFlow:    newFloat64(500),
-			EquityBuildup:      newFloat64(25000),
 		},
 	}
 

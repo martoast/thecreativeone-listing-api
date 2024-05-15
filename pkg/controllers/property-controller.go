@@ -86,18 +86,11 @@ func UpdateProperty(w http.ResponseWriter, r *http.Request) {
 	propertyDetails, db := models.GetPropertyById(ID)
 
 	propertyDetails.Price = updateProperty.Price
-	propertyDetails.DownPayment = updateProperty.DownPayment
-	propertyDetails.TotalPrice = updateProperty.TotalPrice
-	propertyDetails.Interest = updateProperty.Interest
-	propertyDetails.MonthlyPayment = updateProperty.MonthlyPayment
 	propertyDetails.Description = updateProperty.Description
-	propertyDetails.ARV = updateProperty.ARV
-	propertyDetails.Benefits = updateProperty.Benefits
 	propertyDetails.Images = updateProperty.Images
 	propertyDetails.Sold = updateProperty.Sold
 	propertyDetails.Bedrooms = updateProperty.Bedrooms
 	propertyDetails.Bathrooms = updateProperty.Bathrooms
-	propertyDetails.SquareFootage = updateProperty.SquareFootage
 	propertyDetails.RentZestimate = updateProperty.RentZestimate
 	propertyDetails.Zestimate = updateProperty.Zestimate
 	propertyDetails.PropertyType = updateProperty.PropertyType
@@ -105,13 +98,6 @@ func UpdateProperty(w http.ResponseWriter, r *http.Request) {
 	propertyDetails.YearBuilt = updateProperty.YearBuilt
 	propertyDetails.LotSize = updateProperty.LotSize
 	propertyDetails.PricePerSquareFoot = updateProperty.PricePerSquareFoot
-	propertyDetails.MortgageBalance = updateProperty.MortgageBalance
-	propertyDetails.InterestRate = updateProperty.InterestRate
-	propertyDetails.PITI = updateProperty.PITI
-	propertyDetails.ExitROIStrategy = updateProperty.ExitROIStrategy
-	propertyDetails.EstimateROI = updateProperty.EstimateROI
-	propertyDetails.MonthlyCashFlow = updateProperty.MonthlyCashFlow
-	propertyDetails.EquityBuildup = updateProperty.EquityBuildup
 	propertyDetails.LivingArea = updateProperty.LivingArea
 
 	db.Save(&propertyDetails)
