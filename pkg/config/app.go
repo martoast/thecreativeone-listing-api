@@ -16,13 +16,14 @@ func Connect() {
 	dbname, dbname_ok := os.LookupEnv("MYSQL_DATABASE")
 	rootpass, rootpass_ok := os.LookupEnv("MYSQL_ROOT_PASSWORD")
 	dbhost, dbhost_ok := os.LookupEnv("MYSQL_HOST")
-	if dbname_ok && rootpass_ok && dbhost_ok {
+	dbport, dbport_ok := os.LookupEnv("MYSQL_PORT")
+	if dbname_ok && rootpass_ok && dbhost_ok && dbport_ok {
 		fmt.Println(rootpass, dbname, dbhost)
 	} else {
 		fmt.Println("Environment variables are not set. Please set environment variables.")
 	}
 
-	dsn := fmt.Sprintf("root:%s@tcp(%s:3306)/%s?charset=utf8&parseTime=True&loc=Local", rootpass, dbhost, dbname)
+	dsn := fmt.Sprintf("root:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", rootpass, dbhost, dbport, dbname)
 
 	fmt.Println(dsn)
 
