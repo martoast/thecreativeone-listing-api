@@ -25,6 +25,10 @@ type Property struct {
 	LotSize            *int     `json:"lot_size"`              // INT
 	PricePerSquareFoot *float64 `json:"price_per_square_foot"` // DECIMAL(10, 2)
 	LivingArea         *int     `json:"living_area"`           // INT
+	PurchasePrice      *float64 `json:"purchase_price"`        // DECIMAL(10,2)
+	BalanceToClose     *float64 `json:"balance_to_close"`      // DECIMAL(10,2)
+	MonthlyHoldingCost *float64 `json:"monthly_holding_cost"`  // DECIMAL(10,2)
+	InterestRate       *float64 `json:"interest_rate"`         // DECIMAL(10,2)
 }
 
 func init() {
@@ -86,6 +90,10 @@ func SeedProperties() {
 			LotSize:            newInt(5000),
 			LivingArea:         newInt(3000),
 			PricePerSquareFoot: newFloat64(300),
+			PurchasePrice:      newFloat64(300000),
+			BalanceToClose:     newFloat64(10000),
+			MonthlyHoldingCost: newFloat64(5000),
+			InterestRate:       newFloat64(300),
 		},
 	}
 
