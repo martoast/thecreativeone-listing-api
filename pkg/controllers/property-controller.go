@@ -15,9 +15,46 @@ import (
 var NewProperty models.Property
 
 func GetProperties(w http.ResponseWriter, r *http.Request) {
-	newProperties := models.GetAllProperties()
+	// Get query parameters for page and pageSize
+	pageStr := r.URL.Query().Get("page")
+	pageSizeStr := r.URL.Query().Get("pageSize")
 
-	res, err := json.Marshal(newProperties)
+	// Default values if not provided
+	page := 1
+	pageSize := 10
+
+	var err error
+	if pageStr != "" {
+		page, err = strconv.Atoi(pageStr)
+		if err != nil {
+			http.Error(w, "Invalid page parameter", http.StatusBadRequest)
+			return
+		}
+	}
+
+	if pageSizeStr != "" {
+		pageSize, err = strconv.Atoi(pageSizeStr)
+		if err != nil {
+			http.Error(w, "Invalid pageSize parameter", http.StatusBadRequest)
+			return
+		}
+	}
+
+	// Calculate offset
+	offset := (page - 1) * pageSize
+
+	// Get paginated properties from the model
+	newProperties, total := models.GetPaginatedProperties(pageSize, offset)
+
+	// Create response with properties and total count
+	response := map[string]interface{}{
+		"properties": newProperties,
+		"total":      total,
+		"page":       page,
+		"pageSize":   pageSize,
+	}
+
+	res, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, "Failed to encode properties as JSON", http.StatusInternalServerError)
 		return

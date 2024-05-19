@@ -53,6 +53,16 @@ func GetAllProperties() []Property {
 	return Properties
 }
 
+func GetPaginatedProperties(limit int, offset int) ([]Property, int64) {
+	var properties []Property
+	var total int64
+
+	db.Limit(limit).Offset(offset).Find(&properties)
+	db.Model(&Property{}).Count(&total)
+
+	return properties, total
+}
+
 func GetPropertyById(ID int64) (*Property, *gorm.DB) {
 	var getProperty Property
 	db := db.Where("ID=?", ID).Find(&getProperty)
