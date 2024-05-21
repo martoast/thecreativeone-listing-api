@@ -18,10 +18,12 @@ func GetProperties(w http.ResponseWriter, r *http.Request) {
 	// Get query parameters for page and pageSize
 	pageStr := r.URL.Query().Get("page")
 	pageSizeStr := r.URL.Query().Get("pageSize")
+	soldParam := r.URL.Query().Get("sold")
 
 	// Default values if not provided
 	page := 1
 	pageSize := 10
+	var sold *bool
 
 	var err error
 	if pageStr != "" {
@@ -40,11 +42,20 @@ func GetProperties(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if soldParam != "" {
+		soldValue, err := strconv.ParseBool(soldParam)
+		if err != nil {
+			http.Error(w, "Invalid sold parameter", http.StatusBadRequest)
+			return
+		}
+		sold = &soldValue
+	}
+
 	// Calculate offset
 	offset := (page - 1) * pageSize
 
 	// Get paginated properties from the model
-	newProperties, total := models.GetPaginatedProperties(pageSize, offset)
+	newProperties, total := models.GetPaginatedProperties(pageSize, offset, sold)
 
 	// Create response with properties and total count
 	response := map[string]interface{}{

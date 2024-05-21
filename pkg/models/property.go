@@ -53,12 +53,18 @@ func GetAllProperties() []Property {
 	return Properties
 }
 
-func GetPaginatedProperties(limit int, offset int) ([]Property, int64) {
+func GetPaginatedProperties(limit int, offset int, sold *bool) ([]Property, int64) {
 	var properties []Property
 	var total int64
 
-	db.Limit(limit).Offset(offset).Find(&properties)
-	db.Model(&Property{}).Count(&total)
+	query := db.Model(&Property{})
+
+	if sold != nil {
+		query = query.Where("sold = ?", *sold)
+	}
+
+	query.Count(&total)
+	query.Limit(limit).Offset(offset).Find(&properties)
 
 	return properties, total
 }
