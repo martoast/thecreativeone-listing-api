@@ -29,6 +29,8 @@ type Property struct {
 	BalanceToClose     *float64 `json:"balance_to_close"`      // DECIMAL(10,2)
 	MonthlyHoldingCost *float64 `json:"monthly_holding_cost"`  // DECIMAL(10,2)
 	InterestRate       *float64 `json:"interest_rate"`         // DECIMAL(10,2)
+	NearbyHospitals    *string  `json:"nearby_hospitals"`      // JSON array of nearby_hospitals
+	NearbySchools      *string  `json:"nearby_schools"`        // JSON array of nearby_schools
 }
 
 func init() {
