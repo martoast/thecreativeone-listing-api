@@ -1,7 +1,7 @@
-# MyCreativeFinancing API
+# TheCreativeOne Listing API
 
 ## Introduction
-This API serves as the backend for the MyCreativeFinancing application, designed to manage and manipulate property data efficiently. Built with Go and leveraging the Gorilla Mux router along with the GORM ORM for interacting with MySQL, this API provides a robust platform for real estate professionals to access and manage their property listings on their custom websites.
+This API serves as the backend for the TheCreativeOne listings application, designed to manage and manipulate property data efficiently. Built with Go and leveraging the Gorilla Mux router along with the GORM ORM for interacting with MySQL, this API provides a robust platform for real estate professionals to access and manage their property listings on their custom websites.
 
 
 ## Features
