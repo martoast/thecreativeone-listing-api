@@ -70,7 +70,7 @@ func GetPaginatedProperties(limit int, offset int, sold *bool) ([]Property, int6
 	}
 
 	query.Count(&total)
-	query.Limit(limit).Offset(offset).Find(&properties)
+	query.Order("created_at DESC").Limit(limit).Offset(offset).Find(&properties)
 
 	return properties, total
 }
