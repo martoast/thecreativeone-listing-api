@@ -35,6 +35,7 @@ type Property struct {
 	PriceHistory       *string  `json:"price_history"`         // JSON array of price history
 	TaxHistory         *string  `json:"tax_history"`           // JSON array of tax history
 	MonthlyHoaFee      *int     `json:"monthly_hoa_fee"`       // INT
+	AssistedLiving     *bool    `json:"assisted_living"`       // BOOLEAN
 }
 
 func init() {
@@ -59,7 +60,7 @@ func GetAllProperties() []Property {
 	return Properties
 }
 
-func GetPaginatedProperties(limit int, offset int, sold *bool) ([]Property, int64) {
+func GetPaginatedProperties(limit int, offset int, sold *bool, assisted_living *bool) ([]Property, int64) {
 	var properties []Property
 	var total int64
 
@@ -67,6 +68,11 @@ func GetPaginatedProperties(limit int, offset int, sold *bool) ([]Property, int6
 
 	if sold != nil {
 		query = query.Where("sold = ?", *sold)
+	}
+
+	if assisted_living != nil {
+		query = query.Where("assisted_living = ?", *assisted_living)
+
 	}
 
 	query.Count(&total)
@@ -122,6 +128,7 @@ func SeedProperties() {
 			PriceHistory:       newString("[{\"date\": \"2022-01-01\", \"price\": 295000}, {\"date\": \"2023-01-01\", \"price\": 300000}]"),
 			TaxHistory:         newString("[{\"year\": 2022, \"tax\": 3500}, {\"year\": 2023, \"tax\": 3600}]"),
 			MonthlyHoaFee:      newInt(1000),
+			AssistedLiving:     newBool(false),
 		},
 	}
 

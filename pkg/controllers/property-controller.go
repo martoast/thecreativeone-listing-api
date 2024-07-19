@@ -19,11 +19,13 @@ func GetProperties(w http.ResponseWriter, r *http.Request) {
 	pageStr := r.URL.Query().Get("page")
 	pageSizeStr := r.URL.Query().Get("pageSize")
 	soldParam := r.URL.Query().Get("sold")
+	assistedLivingParam := r.URL.Query().Get("assistedLiving")
 
 	// Default values if not provided
 	page := 1
 	pageSize := 10
 	var sold *bool
+	var assisted_living *bool
 
 	var err error
 	if pageStr != "" {
@@ -51,11 +53,20 @@ func GetProperties(w http.ResponseWriter, r *http.Request) {
 		sold = &soldValue
 	}
 
+	if assistedLivingParam != "" {
+		assistedLivingValue, err := strconv.ParseBool(assistedLivingParam)
+		if err != nil {
+			http.Error(w, "Invalid assisted living parameter", http.StatusBadRequest)
+			return
+		}
+		assisted_living = &assistedLivingValue
+	}
+
 	// Calculate offset
 	offset := (page - 1) * pageSize
 
 	// Get paginated properties from the model
-	newProperties, total := models.GetPaginatedProperties(pageSize, offset, sold)
+	newProperties, total := models.GetPaginatedProperties(pageSize, offset, sold, assisted_living)
 
 	// Create response with properties and total count
 	response := map[string]interface{}{
@@ -157,6 +168,7 @@ func UpdateProperty(w http.ResponseWriter, r *http.Request) {
 	propertyDetails.PriceHistory = updateProperty.PriceHistory
 	propertyDetails.TaxHistory = updateProperty.TaxHistory
 	propertyDetails.MonthlyHoaFee = updateProperty.MonthlyHoaFee
+	propertyDetails.AssistedLiving = updateProperty.AssistedLiving
 
 	db.Save(&propertyDetails)
 	res, err := json.Marshal(propertyDetails)
