@@ -2,6 +2,7 @@ package models
 
 import (
 	"api/pkg/config"
+	"strings"
 
 	"gorm.io/gorm"
 )
@@ -76,7 +77,17 @@ func GetPaginatedProperties(limit int, offset int, sold *bool, assisted_living *
 	}
 
 	if addressFilter != "" {
-		query = query.Where("LOWER(address) LIKE LOWER(?)", "%"+addressFilter+"%")
+		// Replace hyphens with spaces and split into words
+		words := strings.Fields(strings.ReplaceAll(addressFilter, "-", " "))
+
+		// Build the query condition
+		for i, word := range words {
+			if i == 0 {
+				query = query.Where("LOWER(address) LIKE LOWER(?)", "%"+word+"%")
+			} else {
+				query = query.Where("LOWER(address) LIKE LOWER(?)", "%"+word+"%")
+			}
+		}
 	}
 
 	query.Count(&total)
