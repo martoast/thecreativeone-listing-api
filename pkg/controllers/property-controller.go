@@ -20,6 +20,7 @@ func GetProperties(w http.ResponseWriter, r *http.Request) {
 	pageSizeStr := r.URL.Query().Get("pageSize")
 	soldParam := r.URL.Query().Get("sold")
 	assistedLivingParam := r.URL.Query().Get("assistedLiving")
+	addressFilter := r.URL.Query().Get("address")
 
 	// Default values if not provided
 	page := 1
@@ -66,7 +67,7 @@ func GetProperties(w http.ResponseWriter, r *http.Request) {
 	offset := (page - 1) * pageSize
 
 	// Get paginated properties from the model
-	newProperties, total := models.GetPaginatedProperties(pageSize, offset, sold, assisted_living)
+	newProperties, total := models.GetPaginatedProperties(pageSize, offset, sold, assisted_living, addressFilter)
 
 	// Create response with properties and total count
 	response := map[string]interface{}{

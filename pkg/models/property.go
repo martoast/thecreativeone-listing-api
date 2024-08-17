@@ -60,7 +60,7 @@ func GetAllProperties() []Property {
 	return Properties
 }
 
-func GetPaginatedProperties(limit int, offset int, sold *bool, assisted_living *bool) ([]Property, int64) {
+func GetPaginatedProperties(limit int, offset int, sold *bool, assisted_living *bool, addressFilter string) ([]Property, int64) {
 	var properties []Property
 	var total int64
 
@@ -73,6 +73,10 @@ func GetPaginatedProperties(limit int, offset int, sold *bool, assisted_living *
 	if assisted_living != nil {
 		query = query.Where("assisted_living = ?", *assisted_living)
 
+	}
+
+	if addressFilter != "" {
+		query = query.Where("LOWER(address) LIKE LOWER(?)", "%"+addressFilter+"%")
 	}
 
 	query.Count(&total)
