@@ -170,6 +170,8 @@ func UpdateProperty(w http.ResponseWriter, r *http.Request) {
 	propertyDetails.TaxHistory = updateProperty.TaxHistory
 	propertyDetails.MonthlyHoaFee = updateProperty.MonthlyHoaFee
 	propertyDetails.AssistedLiving = updateProperty.AssistedLiving
+	propertyDetails.Latitude = updateProperty.Latitude
+	propertyDetails.Longitude = updateProperty.Longitude
 
 	db.Save(&propertyDetails)
 	res, err := json.Marshal(propertyDetails)

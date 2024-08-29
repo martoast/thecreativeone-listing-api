@@ -37,6 +37,8 @@ type Property struct {
 	TaxHistory         *string  `json:"tax_history"`           // JSON array of tax history
 	MonthlyHoaFee      *int     `json:"monthly_hoa_fee"`       // INT
 	AssistedLiving     *bool    `json:"assisted_living"`       // BOOLEAN
+	Latitude           *float64 `json:"latitude"`              // DECIMAL(10, 2)
+	Longitude          *float64 `json:"longitude"`             // DECIMAL(10, 2)
 }
 
 func init() {
@@ -144,6 +146,8 @@ func SeedProperties() {
 			TaxHistory:         newString("[{\"year\": 2022, \"tax\": 3500}, {\"year\": 2023, \"tax\": 3600}]"),
 			MonthlyHoaFee:      newInt(1000),
 			AssistedLiving:     newBool(false),
+			Latitude:           newFloat64(300000),
+			Longitude:          newFloat64(300000),
 		},
 	}
 
