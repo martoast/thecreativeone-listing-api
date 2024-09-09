@@ -39,6 +39,8 @@ type Property struct {
 	AssistedLiving     *bool    `json:"assisted_living"`       // BOOLEAN
 	Latitude           *float64 `json:"latitude"`              // DECIMAL(10, 2)
 	Longitude          *float64 `json:"longitude"`             // DECIMAL(10, 2)
+	Amenities          *string  `json:"amenities"`             // JSON array of amenities
+	AssistedLivingRate *float64 `json:"assisted_living_rate"`  // DECIMAL(10, 2)
 }
 
 func init() {
@@ -148,6 +150,8 @@ func SeedProperties() {
 			AssistedLiving:     newBool(false),
 			Latitude:           newFloat64(300000),
 			Longitude:          newFloat64(300000),
+			Amenities:          newString("[\"Amenity A\", \"Amenity B\"]"),
+			AssistedLivingRate: newFloat64(300000),
 		},
 	}
 
