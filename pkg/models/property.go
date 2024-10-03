@@ -41,6 +41,7 @@ type Property struct {
 	Longitude          *float64 `json:"longitude"`             // DECIMAL(10, 2)
 	Amenities          *string  `json:"amenities"`             // JSON array of amenities
 	AssistedLivingRate *float64 `json:"assisted_living_rate"`  // DECIMAL(10, 2)
+	GoogleReviewURL    *string  `json:"google_review_url"`     // URL for google review
 }
 
 func init() {
@@ -152,6 +153,7 @@ func SeedProperties() {
 			Longitude:          newFloat64(300000),
 			Amenities:          newString("[\"Amenity A\", \"Amenity B\"]"),
 			AssistedLivingRate: newFloat64(300000),
+			GoogleReviewURL:    newString("https://www.google.com"),
 		},
 	}
 
