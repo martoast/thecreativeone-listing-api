@@ -30,9 +30,7 @@ type Property struct {
 	BalanceToClose     *float64 `json:"balance_to_close"`      // DECIMAL(10,2)
 	MonthlyHoldingCost *float64 `json:"monthly_holding_cost"`  // DECIMAL(10,2)
 	InterestRate       *float64 `json:"interest_rate"`         // DECIMAL(10,2)
-	NearbyHospitals    *string  `json:"nearby_hospitals"`      // JSON array of nearby_hospitals
 	NearbySchools      *string  `json:"nearby_schools"`        // JSON array of nearby_schools
-	NearbyHomes        *string  `json:"nearby_homes"`          // JSON array of nearby_homes
 	PriceHistory       *string  `json:"price_history"`         // JSON array of price history
 	TaxHistory         *string  `json:"tax_history"`           // JSON array of tax history
 	MonthlyHoaFee      *int     `json:"monthly_hoa_fee"`       // INT
@@ -142,9 +140,7 @@ func SeedProperties() {
 			BalanceToClose:     newFloat64(10000),
 			MonthlyHoldingCost: newFloat64(5000),
 			InterestRate:       newFloat64(300),
-			NearbyHospitals:    newString("[\"Hospital A\", \"Hospital B\"]"),
 			NearbySchools:      newString("[\"School A\", \"School B\"]"),
-			NearbyHomes:        newString("[\"Home A\", \"Home B\"]"),
 			PriceHistory:       newString("[{\"date\": \"2022-01-01\", \"price\": 295000}, {\"date\": \"2023-01-01\", \"price\": 300000}]"),
 			TaxHistory:         newString("[{\"year\": 2022, \"tax\": 3500}, {\"year\": 2023, \"tax\": 3600}]"),
 			MonthlyHoaFee:      newInt(1000),
